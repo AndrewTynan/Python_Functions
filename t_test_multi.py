@@ -2,8 +2,6 @@
 from statsmodels.stats.weightstats import CompareMeans, DescrStatsW  
 
 
-# DEFINE extract_t_test()
-
 def extract_t_test(t_test_results, t_test_CIs): 
 
     # NOTE: a helper function to extract the values of interest from the t-test output
@@ -15,18 +13,15 @@ def extract_t_test(t_test_results, t_test_CIs):
     return t_test_output
 
 
-
-# DEFINE t_test() 
-
 def t_test(df, month, metric): 
     # NOTE month is just for adding a data labels 
 
     control = (df
-                .query("is_longterm_ucg == 'Yes'")
+                .query("group_var == 'Yes'")
                 .loc[:, metric] 
                 .to_list()) 
     exposed = (df
-                .query("is_longterm_ucg == 'No'")
+                .query("group_var == 'No'")
                 .loc[:, metric] 
                 .to_list()) 
 
@@ -42,9 +37,6 @@ def t_test(df, month, metric):
 
     return t_test_output
 
-
-
-# DEFINE report_metric()
 
 def report_metric(df, stat, groups): 
 
@@ -70,7 +62,7 @@ def report_metric(df, stat, groups):
     # elif stat IN ('list of engagement metrics'):  
     #     df_base = (df
     #                 .query("is_base_population == 'Yes'") 
-    #                 .groupby(['lifetime_month_ref', 'is_longterm_ucg'])
+    #                 .groupby(['lifetime_month_ref', 'group_var'])
     #                 .agg(total_user_id_count  = ('user_id', 'count'), 
     #                      mean                 = (metric, 'mean'),
     #                      std                  = (metric, 'std'))
@@ -88,7 +80,7 @@ def test_runner(df_n, test, metric, period, groups):
     # test:   't-test', 'anova' 
     # metric: 'is_retained'           # NOTE can update to engagement metrics 
     # period: 'prior', 'cumulative'     
-    # groups: a list with any single value or combination of values: 'is_longterm_ucg', tier_type' & 'payment_provider' 
+    # groups: a list with any single value or combination of values: 'group_var', tier_type' & 'payment_provider' 
 
     lifetime_months = df_n.loc[:, 'lifetime_month'].unique().tolist()
     lifetime_months.sort() 
@@ -142,5 +134,3 @@ def test_runner(df_n, test, metric, period, groups):
     df_agg_results = df_agg_results.rename(columns = {'lifetime_month_ref': 'lifetime_month'})
 
     return test_results, df_agg_results 
-
-
