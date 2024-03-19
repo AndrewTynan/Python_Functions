@@ -140,7 +140,7 @@ results = sim(baseline_rate = baseline_rate,
 
 results
 
-# POC sim_runner() for long-term UCG (e.g. new subscribers)
+# POC sim_runner() for long-term (e.g. new subscribers)
 
 samples        = 50
 baseline_rates = [0.55, 0.60, 0.65] 
@@ -190,7 +190,7 @@ def sim_runner(baseline_rate, mde, population, control_ratio, samples):
     
     return sim_results
 
-# RUN sim_runner() for long-term UCG (e.g. new subscribers)
+# RUN sim_runner() for long-term  (e.g. new subscribers)
 
 sample        = 500
 baseline_rate = [0.55, 0.60, 0.65] 
@@ -360,7 +360,7 @@ print('Only sharing high level summary stats to limit the rows')
 new_subs_sim_test_basel_five_num_sum
 
 
-# RUN sim_runner() for short-term UCG (e.g. existing subs)
+# RUN sim_runner() for short-term  (e.g. existing subs)
 
 samples        = 500
 baseline_rates = [0.85, 0.90, 0.95] 
