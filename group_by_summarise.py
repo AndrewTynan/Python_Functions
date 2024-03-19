@@ -1,7 +1,5 @@
 
-
 # DEFINE group_by_summarise 
-
 def group_by_summarise(df, group_by, metric, stat): 
 
     col_name = "{metric}_{stat}".format(metric = metric, stat = stat)
@@ -16,7 +14,7 @@ def group_by_summarise(df, group_by, metric, stat):
     return df 
 
 group_by_summarise(df       = new_subs_user_level, 
-                   group_by = 'is_longterm_ucg', 
+                   group_by = 'is_longterm_', 
                    metric   = 'user_id',
                    stat     =  'count')
 
@@ -47,16 +45,16 @@ def five_num_sum_by_group(df, by, metric):
     return df
 
 
-print('The table below shows summary stats UCG and non-UCG using the field longterm_ucg_grp')
+print('The table below shows summary stats  and non- using the field longterm__grp')
 
-five_num_sum_by_group(new_subs_w_ucg, 'longterm_ucg_grp', 'daily_percent') 
+five_num_sum_by_group(new_subs_w_, 'longterm__grp', 'daily_percent') 
 
 
 pd.options.display.float_format = '{:.1f}'.format    
 (new_subs_user_level 
-    .groupby(['start_date', 'is_longterm_ucg']) 
+    .groupby(['start_date', 'is_longterm_']) 
     .agg(user_id_count  = ('user_id', 'count')) 
-    .pipe(five_num_sum_by_group, 'is_longterm_ucg', 'user_id_count')) 
+    .pipe(five_num_sum_by_group, 'is_longterm_', 'user_id_count')) 
 
 
 
@@ -92,13 +90,7 @@ def five_num_sum_by_group(df, by, metric):
 
 
 
-print('The table below shows 1 Month Retention summary stats UCG and non-UCG')
+print('The table below shows 1 Month Retention summary stats  and non-')
 
-vars = ['longterm_ucg_grp', 'month_1_churn']
-five_num_sum_by_group(new_subs_w_ucg_w_1month_churn_, vars, 'ucg_retention_rate') 
-
-
-
-
-
-
+vars = ['longterm__grp', 'month_1_churn']
+five_num_sum_by_group(new_subs_w__w_1month_churn_, vars, '_retention_rate') 
