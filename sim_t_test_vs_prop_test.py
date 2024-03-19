@@ -1,37 +1,37 @@
 
-**Overview**
-* Using a simulation to compare Welch Two Sample t-test and the Two Proportions z-test 
-* Variables of interest: `baseline_rate`, `mde`, `population`, and `control_ratio` 
-  * The `baseline_rate` are:
-    * Long-term is 61.5%
-    * Short-term is 90% 
-    * **Note these data points are from September and we are working to get more recent data** 
-  * The `mde` (minimum detectable effect) is designed as: 
-    * Long-term uses 2%
-    * Short-term uses 0.2%
-  * The `population` is designed as: 
-    * Long-term is 200K new monthly subscribers 
-    * Short-term is 3M existing monthly subscribers 
-    * **Note these data points are from September and we are working to get more recent data** 
-  * The `control_ratio` means the imbalance between the *control* and *exposed* segments     
-    * For A/B tests are designed to use: 
-      * Long-term uses a 5% control which is a ratio of 19:1 between exposed to control
-      * Short-term uses a 2% control which is a ratio of 49:1 between exposed to control  
+# **Overview**
+# * Using a simulation to compare Welch Two Sample t-test and the Two Proportions z-test 
+# * Variables of interest: `baseline_rate`, `mde`, `population`, and `control_ratio` 
+#   * The `baseline_rate` are:
+#     * Long-term is 61.5%
+#     * Short-term is 90% 
+#     * **Note these data points are from September and we are working to get more recent data** 
+#   * The `mde` (minimum detectable effect) is designed as: 
+#     * Long-term uses 2%
+#     * Short-term uses 0.2%
+#   * The `population` is designed as: 
+#     * Long-term is 200K new monthly subscribers 
+#     * Short-term is 3M existing monthly subscribers 
+#     * **Note these data points are from September and we are working to get more recent data** 
+#   * The `control_ratio` means the imbalance between the *control* and *exposed* segments     
+#     * For A/B tests are designed to use: 
+#       * Long-term uses a 5% control which is a ratio of 19:1 between exposed to control
+#       * Short-term uses a 2% control which is a ratio of 49:1 between exposed to control  
 
-**Test**
-* Using [pingouin](https://pingouin-stats.org/build/html/index.html) and it's [Welch's t-test](https://pingouin-stats.org/build/html/generated/pingouin.ttest.html) 
-  * At the bottom of the t-test link it mentions 'Independent two-sample T-test with unequal sample size. A Welch’s T-test is used.'
-    * This appears to be triggered automatically since there is not argument used in the example. 
-  * One limitation is the confidence interval is only to 2 decimal places
-* scipy.stats import ttest_ind does not appear to support Welch’s T-test 
-* However, statsmodels CompareMeans does does not appear to have Welch’s T-test
-* [Stackoverflow discussion](https://stackoverflow.com/questions/31768464/confidence-interval-for-t-test-difference-between-means-in-python) of the different options and also a 
-[stackexchange discussion](https://stats.stackexchange.com/questions/475289/confidence-interval-for-2-sample-t-test-with-scipy)  
+# **Test**
+# * Using [pingouin](https://pingouin-stats.org/build/html/index.html) and it's [Welch's t-test](https://pingouin-stats.org/build/html/generated/pingouin.ttest.html) 
+#   * At the bottom of the t-test link it mentions 'Independent two-sample T-test with unequal sample size. A Welch’s T-test is used.'
+#     * This appears to be triggered automatically since there is not argument used in the example. 
+#   * One limitation is the confidence interval is only to 2 decimal places
+# * scipy.stats import ttest_ind does not appear to support Welch’s T-test 
+# * However, statsmodels CompareMeans does does not appear to have Welch’s T-test
+# * [Stackoverflow discussion](https://stackoverflow.com/questions/31768464/confidence-interval-for-t-test-difference-between-means-in-python) of the different options and also a 
+# [stackexchange discussion](https://stats.stackexchange.com/questions/475289/confidence-interval-for-2-sample-t-test-with-scipy)  
 
-**Findings**
-* Welch Two Sample t-test and the Two Proportions z-test have the same t-statistic, p-value, and confidence intervals 
-  * Granted this is on a limited simulation
-  * Maybe they will vary across the range of varibles
+# **Findings**
+# * Welch Two Sample t-test and the Two Proportions z-test have the same t-statistic, p-value, and confidence intervals 
+#   * Granted this is on a limited simulation
+#   * Maybe they will vary across the range of varibles
 
 
 from numpy.random import binomial
