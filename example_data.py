@@ -1,4 +1,8 @@
 
+import pandas as pd 
+import numpy as np
+import random
+
 #create another example df 
 points_df = pd.DataFrame({'team': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
                           'points': [18, 22, 19, 14, 14, 11, 20, 28],

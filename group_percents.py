@@ -19,6 +19,6 @@ def group_percents(df, by):
 
 
 ## Example
-# add execcfile to dexample data 
+# add execcfile to example data 
 
 group_percents(points_df, 'league')

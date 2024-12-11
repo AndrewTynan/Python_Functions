@@ -22,11 +22,16 @@ def tabyl_two_vars(df, var1, var2, percents="No"):
     return display(ip.display.HTML(df.to_html())) 
 
 # examples 
-# tabyl_two_vars(monthly_mex_food_df, "food", "months")
-# tabyl_two_vars(monthly_mex_food_df, "food", "months", percents="Yes")
+
 
 tabyl_two_vars(points_df, "league", "points_bucket")
 
 
 print('can also chose to report percents')
 tabyl_two_vars(points_df, "league", "points_bucket", percents="Yes")
+
+
+
+
+# tabyl_two_vars(monthly_mex_food_df, "food", "months")
+# tabyl_two_vars(monthly_mex_food_df, "food", "months", percents="Yes")
