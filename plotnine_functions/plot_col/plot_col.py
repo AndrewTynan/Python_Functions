@@ -1,49 +1,5 @@
 
-
-df_agg_results['lifetime_month'] = np.where(df_agg_results['lifetime_month_ref']==1, 'one',
-                                    np.where(df_agg_results['lifetime_month_ref']==2, 'two',
-                                    np.where(df_agg_results['lifetime_month_ref']==3, 'three',
-                                    np.where(df_agg_results['lifetime_month_ref']==4, 'four',
-                                    np.where(df_agg_results['lifetime_month_ref']==5, 'five',
-                                    np.where(df_agg_results['lifetime_month_ref']==6, 'six',
-                                    np.where(df_agg_results['lifetime_month_ref']==7, 'seven',
-                                    np.where(df_agg_results['lifetime_month_ref']==8, 'eight',
-                                             'nine'))))))))
-# df_agg_results
-
-df_agg_results['lifetime_month_ref'] = df_agg_results['lifetime_month_ref'].astype('category')
-
-(col_plot(df_agg_results, 'lifetime_month', 'retention_rate', 'is_longterm_ucg', 
-          text = 'retention_rate', 
-          percent = 'retention_rate',
-        #   facet = 'lifetime_month_ref', 
-        # facet_scales = 'free',        
-          position = 'dodge',
-          percent_deciamls = 1,
-        #   nudge_y = 10
-          ) + 
-theme(figure_size = (16, 4),
-      legend_position='bottom') + 
-labs(title="Average Long Term UCG Percent by Month"))
-
-
-
-
-
-
-# DEFINE col_plot() ad facet() 
-
-def facet(plot, facet_col, facet_scales=None, nrow=1): 
-
-    if facet_scales is not None: # NOTE scales : Literal["fixed", "free", "free_x", "free_y"] = "fixed" 
-        plt = (plot + facet_wrap(facet_col, nrow=nrow, scales=facet_scales))  
-    else: 
-        plt = (plot + facet_wrap(facet_col, nrow=nrow)) 
-
-    return plt 
-
-
-def col_plot(df, x, y, fill, **kwargs):  
+def plot_col(df, x, y, fill, **kwargs):  
 
     # kwargs options: 'position', 'facet', 'text', 'percent', or 'nrow'
 

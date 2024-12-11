@@ -1,46 +1,4 @@
 
-# different iterations of col_plotter.py 
-
-
-# DEFINE col_plot()
-def col_plot(df, x, y, fill, **kwargs):
-    
-    if 'position' in kwargs:
-        position = kwargs.get('position')    
-        plt = (ggplot(df) + 
-               geom_col(position=position) + 
-               aes(x = x, y = y, fill = fill)) 
-    else: 
-        plt = (ggplot(df) + 
-               geom_col() + 
-               aes(x = x, y = y, fill = fill)) 
-    
-    if 'facet' in kwargs:
-        facet_col = kwargs.get('facet')    
-        plt = (plt + facet_wrap(facet_col, nrow=1))        
-
-    if 'text' in kwargs:
-        text = kwargs.get('text')    
-        plt = (plt + geom_text(aes(label = text), position = position_dodge(width = 1), format_string="{:.1f}%", size = 10, va="bottom"))  # nudge_y = 5)) 
-    
-    return plt 
-
-
-
-
-
-    
-
-def facet(plot, facet_col, facet_scales=None, nrow=1): 
-
-    if facet_scales is not None: # NOTE scales : Literal["fixed", "free", "free_x", "free_y"] = "fixed" 
-        plt = (plot + facet_wrap(facet_col, nrow=nrow, scales=facet_scales))  
-    else: 
-        plt = (plot + facet_wrap(facet_col, nrow=nrow)) 
-
-    return plt 
-
-
 def col_plot(df, x, y, fill, **kwargs):  
 
     # kwargs options: 'position', 'facet', 'text', or 'percent' 
@@ -50,14 +8,11 @@ def col_plot(df, x, y, fill, **kwargs):
     text_size = kwargs.get('text_size', 10)
     percent_deciamls = kwargs.get('percent_deciamls', 2)
     nudge_y = kwargs.get('nudge_y', 0)   
-    print(nudge_y) 
     
     if percent_deciamls == 1:
         deciamls = "{:.1f}%" 
     elif percent_deciamls == 0:
-        deciamls = "{:.0f}%"     
-    else: 
-        deciamls = "{:.2f}%"            
+        deciamls = "{:.0f}%"        
     
     if 'position' in kwargs: 
         position = kwargs.get('position') 
@@ -72,11 +27,11 @@ def col_plot(df, x, y, fill, **kwargs):
         plt = facet(plt, 
                     facet_col = kwargs.get('facet'),
                     facet_scales = kwargs.get('facet_scales', 'fixed'), 
-                    nrow = kwargs.get('nrow', 1)) 
+                    nrow = kwargs.get('nrow', 1))  
 
     if 'text' in kwargs and 'percent' in kwargs and position == 'dodge': # 'position' in kwargs:
         text = kwargs.get('text')    
-        plt = (plt + geom_text(aes(label = text), position = position_dodge(width = 1), size = text_size, va="bottom", format_string=deciamls, nudge_y = nudge_y) 
+        plt = (plt + geom_text(aes(label = text), position = position_dodge(width = 1), size = text_size, va="bottom", format_string=deciamls) #, nudge_y = nudge_y) 
                    + scale_y_continuous(labels = lambda l: ["%d%%" % v for v in l],
                                         limits = [0, 100])) 
         
@@ -84,7 +39,7 @@ def col_plot(df, x, y, fill, **kwargs):
         text = kwargs.get('text')    
         plt = (plt + geom_text(aes(label = text), position = position_stack(vjust = 0.5), size = text_size, va="bottom", format_string=deciamls, nudge_y = nudge_y) 
                    + scale_y_continuous(labels = lambda l: ["%d%%" % v for v in l],
-                                        limits = [0, 100]))         
+                                        limits = [0, 100]))  
     
     if 'text' in kwargs and 'percent' not in kwargs:
         text = kwargs.get('text')    
@@ -103,6 +58,3 @@ def col_plot(df, x, y, fill, **kwargs):
                + guides(fill = guide_legend(title = y.replace("_", " ").title())))   
     
     return plt 
-
-
-

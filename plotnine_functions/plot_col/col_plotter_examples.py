@@ -1,4 +1,32 @@
 
+df_agg_results['lifetime_month'] = np.where(df_agg_results['lifetime_month_ref']==1, 'one',
+                                    np.where(df_agg_results['lifetime_month_ref']==2, 'two',
+                                    np.where(df_agg_results['lifetime_month_ref']==3, 'three',
+                                    np.where(df_agg_results['lifetime_month_ref']==4, 'four',
+                                    np.where(df_agg_results['lifetime_month_ref']==5, 'five',
+                                    np.where(df_agg_results['lifetime_month_ref']==6, 'six',
+                                    np.where(df_agg_results['lifetime_month_ref']==7, 'seven',
+                                    np.where(df_agg_results['lifetime_month_ref']==8, 'eight',
+                                             'nine'))))))))
+# df_agg_results
+
+df_agg_results['lifetime_month_ref'] = df_agg_results['lifetime_month_ref'].astype('category')
+
+(col_plot(df_agg_results, 'lifetime_month', 'retention_rate', 'is_longterm_ucg', 
+          text = 'retention_rate', 
+          percent = 'retention_rate',
+        #   facet = 'lifetime_month_ref', 
+        # facet_scales = 'free',        
+          position = 'dodge',
+          percent_deciamls = 1,
+        #   nudge_y = 10
+          ) + 
+theme(figure_size = (16, 4),
+      legend_position='bottom') + 
+labs(title="Average Long Term UCG Percent by Month"))
+
+
+
 (col_plot(new_subs_cohort_retention_SUMMARY, x = 'is_group_member', y = 'mean', fill = 'is_group_member',  
           text = 'mean', 
           percent = 'mean',
@@ -16,6 +44,8 @@ labs(title = 'New Subscriber First Month Avg Retention by Long-Term  Status',
      x= '')) 
 
 
+
+
 (col_plot(monthly_cohort_counts, x = 'start_month', y = 'cohort_count', fill = 'start_month',  
           text = 'cohort_count', 
           facet = 'is_group_member') + 
@@ -24,6 +54,8 @@ theme(figure_size = (12, 5),
 labs(title = "New Subscriber Monthly Counts by Long-Term  Status",
      subtitle = 'For New Subs in the US',
      x= '')) 
+
+
 
 
 (col_plot(t_test_agg_results, 'factor(lifetime_month)', 'retention_rate', 'is_group_member', 
@@ -37,6 +69,8 @@ labs(title="Cumulative Retention by Long Term  Status Lifetime Month",
      x = 'Lifetime Month')) 
 
 
+
+
 (col_plot(t_test_agg_results, 'factor(lifetime_month)', 'retention_rate', 'is_group_member', 
           text = 'retention_rate', 
           percent = 'retention_rate', 
@@ -47,6 +81,8 @@ theme(figure_size = (16, 4),
 labs(title="Prior Month Retention by Long Term  Status Lifetime Month",
      subtitle='Note: the large drop in month 4 is due to the large November cohort',
      x = 'Lifetime Month')) 
+
+
 
 
 (col_plot(anova_tier_type_df_agg_results, 'factor(lifetime_month_ref)', 'retention_rate', 'is_group_member', 
@@ -63,6 +99,8 @@ labs(title="Cumulative Retention by Long Term  Status Lifetime Month",
      x = 'Lifetime Month')) 
 
 
+
+
 (col_plot(check_1, 'start_year_month', 'vol_churn_rate', 'is_group_member', 
           text = 'vol_churn_rate', 
           percent = 'vol_churn_rate',
@@ -70,6 +108,8 @@ labs(title="Cumulative Retention by Long Term  Status Lifetime Month",
 theme(figure_size = (16, 4),
       legend_position='bottom') + 
 labs(title="Average Long Term  Percent by Month"))
+
+
 
 
 
@@ -86,6 +126,8 @@ labs(title="Average Long Term  Percent by Month"))
 
 
 
+
+
 (col_plot(check_1, 'start_year_month', 'vol_churn_rate', 'is_group_member', 
          text = 'vol_churn_rate', 
          percent = 'vol_churn_rate',
@@ -99,12 +141,16 @@ labs(title="Average Long Term  Percent by Month"))
 
 
 
+
+
 (col_plot(check_1, 'start_year_month', 'vol_churn', 'is_group_member', 
           text = 'vol_churn', 
           position = 'dodge') + 
 theme(figure_size = (16, 4),
       legend_position = 'bottom') + 
 labs(title="Average Long Term  Churn by Month"))
+
+
 
 
 (col_plot(check_1.query("is_group_member == 'Yes'"), # filter to a signle segment
