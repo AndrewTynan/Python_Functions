@@ -1,5 +1,5 @@
 
-def plot_col(df, x, y, fill, **kwargs):  
+def plot_col(df, x, y, fill = False, **kwargs):  
 
     # kwargs options: 'position', 'facet', 'text', 'percent', or 'nrow'
 
@@ -9,7 +9,7 @@ def plot_col(df, x, y, fill, **kwargs):
     percent_deciamls = kwargs.get('percent_deciamls', 2)
     y_nudge = kwargs.get('nudge_y', 0)   
     # print(y_nudge)
-    
+
     if percent_deciamls == 1:
         deciamls = "{:.1f}%" 
     elif percent_deciamls == 0:
@@ -22,9 +22,12 @@ def plot_col(df, x, y, fill, **kwargs):
     else:  
         position = 'stack' 
 
-    plt = (ggplot(df) + 
-            geom_col(position=position) + 
-            aes(x = x, y = y, fill = fill))
+    plt = (ggplot(df) + geom_col(position = position)) 
+
+    if fill:
+        plt = plt + aes(x = x, y = y, fill = fill)
+    else:
+        plt = plt + aes(x = x, y = y) 
     
     if 'facet' in kwargs:
         plt = facet(plt, 
@@ -54,19 +57,25 @@ def plot_col(df, x, y, fill, **kwargs):
             if position == 'dodge': # NOTE default position = "stack", which might be useful sometimes.. 
                 plt = (plt + geom_text(aes(label = text), position = position_dodge(width = 1), size = text_size, va="bottom", format_string=deciamls)) #, nudge_y = y_nudge)) 
         else: 
-            plt = (plt + geom_text(aes(label = text), size = text_size, va="bottom", format_string=deciamls)) # format_string="{:,}"
+            plt = (plt + geom_text(aes(label = text), size = text_size, va="bottom", format_string="{:,}" )) # format_string="{:,}"
 
         plt = (plt + scale_y_continuous(labels = comma_format(),
-                                    limits = [0, max_val_pad]))            
+                                        limits = [0, max_val_pad]))            
 
     if 'percent' in kwargs:
         with warnings.catch_warnings(): # PlotnineWarning: Scale for 'y' is already present. Adding another scale for 'y', which will replace the existing scale."        
             warnings.simplefilter("ignore")
             plt = (plt + scale_y_continuous(labels = percent_format(),
                                         limits = [0, max_val_pad]))
-        
+
     plt = (plt + labs(x=x.replace("_", " ").title(), 
-                      y=y.replace("_", " ").title()) 
-               + guides(fill = guide_legend(title = y.replace("_", " ").title())))   
-    
+                      y=y.replace("_", " ").title())) 
+
+    if fill:
+        plt = (plt + guides(fill = guide_legend(title = y.replace("_", " ").title())))  
+    # else:
+    #     plt = (plt + labs(x=x.replace("_", " ").title(), 
+    #                       y=y.replace("_", " ").title()) 
+    #                + guides(fill = guide_legend(title = y.replace("_", " ").title())))  
+
     return plt 
