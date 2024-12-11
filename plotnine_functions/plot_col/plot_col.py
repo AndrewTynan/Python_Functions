@@ -8,7 +8,7 @@ def plot_col(df, x, y, fill, **kwargs):
     text_size = kwargs.get('text_size', 10)
     percent_deciamls = kwargs.get('percent_deciamls', 2)
     y_nudge = kwargs.get('nudge_y', 0)   
-    print(y_nudge)
+    # print(y_nudge)
     
     if percent_deciamls == 1:
         deciamls = "{:.1f}%" 
@@ -52,11 +52,17 @@ def plot_col(df, x, y, fill, **kwargs):
         if 'position' in kwargs:
             position = kwargs.get('position') 
             if position == 'dodge': # NOTE default position = "stack", which might be useful sometimes.. 
-                plt = (plt + geom_text(aes(label = text), position = position_dodge(width = 1), size = text_size, va="bottom", format_string="{:,}")) #, nudge_y = y_nudge)) 
+                plt = (plt + geom_text(aes(label = text), position = position_dodge(width = 1), size = text_size, va="bottom", format_string=deciamls)) #, nudge_y = y_nudge)) 
         else: 
-            plt = (plt + geom_text(aes(label = text), size = text_size, va="bottom", format_string="{:,}")) 
-        
+            plt = (plt + geom_text(aes(label = text), size = text_size, va="bottom", format_string=deciamls)) # format_string="{:,}"
+
         plt = (plt + scale_y_continuous(labels = comma_format(),
+                                    limits = [0, max_val_pad]))            
+
+    if 'percent' in kwargs:
+        with warnings.catch_warnings(): # PlotnineWarning: Scale for 'y' is already present. Adding another scale for 'y', which will replace the existing scale."        
+            warnings.simplefilter("ignore")
+            plt = (plt + scale_y_continuous(labels = percent_format(),
                                         limits = [0, max_val_pad]))
         
     plt = (plt + labs(x=x.replace("_", " ").title(), 
