@@ -1,6 +1,7 @@
 
 import pandas as pd 
 import numpy as np
+import IPython as ip
 import random
 
 #create another example df 
